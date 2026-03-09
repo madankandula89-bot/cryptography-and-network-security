@@ -1,0 +1,37 @@
+def text_to_num(text):
+    return [ord(i) - 65 for i in text]
+def num_to_text(nums):
+    return ''.join(chr(i + 65) for i in nums)
+def encrypt(plain, key):
+    p = text_to_num(plain)
+    result = []
+    for i in range(3):
+        val = 0
+        for j in range(3):
+            val += key[i][j] * p[j]
+        result.append(val % 26)
+    return num_to_text(result)
+def decrypt(cipher, key_inv):
+    c = text_to_num(cipher)
+    result = []
+    for i in range(3):
+        val = 0
+        for j in range(3):
+            val += key_inv[i][j] * c[j]
+        result.append(val % 26)
+    return num_to_text(result)
+key = [
+    [6,24,1],
+    [13,16,10],
+    [20,17,15]
+]
+key_inv = [
+    [8,5,10],
+    [21,8,21],
+    [21,12,8]
+]
+plain = "ACT"
+cipher = encrypt(plain, key)
+print("Encrypted:", cipher)
+text = decrypt(cipher, key_inv)
+print("Decrypted:", text)
